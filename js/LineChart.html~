@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<title>Line Chart</title>
+<script src="Chart.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+<script>
+//==============================//
+//	データ			//
+//==============================//
+var	datapos = 10;
+var	onoff=1;
+var lineChartData = {
+	labels : ["1番目","2番目","3番目","4番目","5番目","6番目","7番目","8番目","9番目","10番目"],
+	bezierCurve: false,
+	datasets : [
+		{
+			label: "1本目",
+			fillColor : "rgba(255,255,255,0.2)",
+			strokeColor : "red",
+			pointColor : "red",
+			data : []
+		},
+		{
+			label: "2本目",
+			fillColor : "rgba(255,255,255,0.2)",
+			strokeColor : "blue",
+			pointColor : "blue",
+			data : []
+		}
+	]
+};
+
+//==============================//
+//	開始時処理		//
+//==============================//
+window.onload = function(){
+
+	//	初期データセット
+	for(i=0 ; i < lineChartData.datasets.length ; i ++)
+	{
+		for(j=0;j< datapos;j++)
+		{
+			lineChartData.datasets[i].data[j] =  Math.round(Math.random()*100);
+		}
+	}
+
+	//	チャート生成
+	var ctx = document.getElementById("canvas").getContext("2d");
+	window.myChart = new Chart(ctx).Line(lineChartData, {
+		responsive : true
+	});
+
+	//	１秒ごとに繰り返し
+	setTimeout("mycheck()",1000);
+
+}
+
+//==============================//
+//	繰り返し処理		//
+//==============================//
+function mycheck()
+{
+	myaddData = [];
+	for(i=0;i<lineChartData.datasets.length;i++)
+	{
+		myaddData[i]= Math.round(Math.random()*100);
+	}
+	window.myChart.addData(myaddData,(datapos+1)+"番目");
+	datapos++;
+
+	//	継続フラグが１だったら、再度呼ぶ
+	if (onoff == 1 )
+	{
+		setTimeout("mycheck()",1000);
+	}
+}
+
+//==============================//
+//	データ追加・停止	//
+//==============================//
+function stopsw()
+{
+	if ( onoff == 1 )
+	{
+		onoff = 0;
+	}
+	else
+	{
+		onoff = 1;
+		setTimeout("mycheck()",1000);
+	}
+}
+
+</script>
+</head>
+
+<body>
+<div style="width: 50%">
+	<canvas id="canvas" height="450" width="600"></canvas>
+</div>
+
+<button onclick="stopsw()">グラフ追加／停止切り替え</button>
+
+</body>
+
+</html>

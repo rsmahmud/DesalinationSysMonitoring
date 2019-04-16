@@ -1,0 +1,48 @@
+body{
+    margin: 0 auto;
+    padding: 0;
+    color: black; 
+    font-size: 10pt; 
+    font-family: "Trebuchet MS", sans-serif;
+}
+#tablink{
+    width: auto;
+    height: 50px;
+    background-color: #c8e6c9;
+}
+.tab{
+    text-align: center;
+    float: left;
+    height: 50px;
+    width: 25%;
+    min-width: 220px;
+    background-color: #c8e6c9;
+}
+.tabs{
+    font-size: 15px;
+    text-transform: uppercase;
+}
+.tabs:hover{
+    background-color: #a5d6a7;
+    font-weight: bold;
+}
+ /* Clear floats after the tabs */
+.tab:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.column {
+    float: left;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+#graphinfo{
+    font-size: 12px;
+}

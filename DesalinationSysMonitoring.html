@@ -1,0 +1,362 @@
+<html lang="en">
+<head>
+ <meta http-equiv="Content-Type" Content="text/html;charset=utf-8">
+ <meta http-equiv="Content-Script-Type" content="text/javascript">
+
+ <title>Desalination Monitoring</title>
+ <script src="js/Chart.js"></script>
+ <script src="desalinationscript.js"></script>
+ <script type="text/javascript" src="js/prototype.js"></script>
+ <link rel="stylesheet" href="desalinationstyle.css">
+</head>
+
+<body>
+    <form name="js">
+        <h1 style="position: absolute; top: 5px; left:20px;">Monitoring</h1>
+
+        <div id="cntainer" style="background-color: #e1eeee; width: auto; height: 700px;">
+            <img src="Desalination-system2.svg" id="area1" width="1300" height="600" style="position:absolute;top:100px; left:0px;" align="left">
+
+            <div id="unit" style="position: absolute; top:320px; left: 440px; font-size: 20px;">Sprayflash</div>
+            <div id="unit" style="position: absolute; top:270px; left: 1120px; font-size: 20px;">Condenser</div>
+            <div id="unit" style="position: absolute; top:480px; left: 1120px; font-size: 20px;">AfterCondenser</div>
+
+            <div id="da0" style="display:none;position: absolute; top: 10px; left: 1px; font-size: 12px;">zero</div>
+            <span style="position: absolute; top: 110px; left: 10px; font-size: 14px;">Time:</span>
+            <div id="da1" style="position: absolute;top: 110px; left: 50px; font-size: 12px;">A</div>
+
+            <!--Point0の表示-->
+            <span style="position: absolute; top: 390px; left: 110px; font-size: 14px;">Q:</span>
+            <div id="da40" style="position: absolute; top: 390px; left: 140px; font-size: 12px;">B</div> <!-- Point0 体積流量 -->
+            <div id="un2" style="position: absolute; top: 390px; left: 210px; font-size: 12px;">[m^3/h]</div>
+            <span style="position: absolute; top: 420px; left: 110px; font-size: 14px;">T:</span>
+            <div id="da2" style="position: absolute; top: 420px; left: 140px; font-size: 12px;">C</div> <!-- Point0 温度-->
+            <div id="un3" style="position: absolute; top:420px; left: 210px; font-size: 12px;">[deg]</div>
+            <span style="position: absolute; top: 450px; left: 110px; font-size: 14px;">P:</span>
+            <div id="da12" style="position: absolute; top: 450px; left: 140px; font-size: 12px;">D</div> <!--Point0  圧力-->
+            <div id="un4" style="position: absolute; top: 450px; left: 210px; font-size: 12px;">[KPa]</div>
+
+            <!--Point1の表示-->
+            <span style="position: absolute; top: 570px; left: 420px; font-size: 14px;">Q:</span>
+            <div id="da01" style="position: absolute; top: 570px; left: 450px; font-size: 12px;">E</div>  <!-- Point1  体積流量-->
+            <div id="un5" style="position: absolute; top: 570px; left: 520px; font-size: 12px;">[m^3/h]</div>
+            <span style="position: absolute; top: 600px; left: 420px; font-size: 14px;">T:</span>
+            <div id="da3" style="position: absolute; top: 600px; left: 450px; font-size: 12px;">F</div> <!-- Point1 温度 -->
+            <div id="un6" style="position: absolute; top: 600px; left: 520px; font-size: 12px;">[deg]</div>
+            <span style="position: absolute; top: 630px; left: 420px; font-size: 14px;">P:</span>
+            <div id="da13" style="position: absolute; top: 630px; left: 450px; font-size: 12px;">G</div> <!-- Point1 圧力 -->
+            <div id="un7" style="position: absolute; top: 630px; left: 520px; font-size: 12px;">[KPa]</div>
+
+            <!--Point2の表示-->
+            <span style="position: absolute; top: 130px; left: 170px; font-size: 14px;">Q:</span>
+            <div id="da04" style="position: absolute; top: 130px; left: 200px; font-size: 12px;">H</div> <!-- Point2 体積流量-->
+            <div id="un8" style="position: absolute; top: 130px; left: 270px; font-size: 12px;">[m^3/h]</div>
+            <span style="position: absolute; top: 160px; left: 170px; font-size: 14px;">T:</span>
+            <div id="da4" style="position: absolute; top: 160px; left: 200px; font-size: 12px;">I</div> <!-- Point2 温度 -->
+            <div id="un9" style="position: absolute; top: 160px; left: 270px; font-size: 12px;">[deg]</div>
+            <span style="position: absolute; top: 190px; left: 170px; font-size: 14px;">P:</span>
+            <div id="da15" style="position: absolute; top: 190px; left: 200px; font-size: 12px;">J</div> <!-- Point2 圧力-->
+            <div id="un10" style="position: absolute; top: 190px; left: 270px; font-size: 12px;">[KPa]</div>
+
+            <!--Point3の表示-->
+            <span style="position: absolute; top: 90px; left: 1100px; font-size: 14px;">Q:</span>
+            <div id="da05" style="position: absolute; top: 90px; left: 1130px; font-size: 12px;">K</div> <!-- Point3 体積流量 -->
+            <div id="un11" style="position: absolute; top: 90px; left: 1200px; font-size: 12px;">[m^3/h]</div>
+            <span style="position: absolute; top: 120px; left: 1100px; font-size: 14px;">T:</span>
+            <div id="da5" style="position: absolute; top: 120px; left: 1130px; font-size: 12px;">L</div> <!-- Point3 温度 -->
+            <div id="un12" style="position: absolute; top: 120px; left: 1200px; font-size: 12px;">[deg]</div>
+            <span style="position: absolute; top: 150px; left: 1100px; font-size: 14px;">P:</span>
+            <div id="da16" style="position: absolute; top: 150px; left: 1130px; font-size: 12px;">M</div> <!-- Point3 圧力 -->
+            <div id="un13" style="position: absolute; top: 150px; left: 1200px; font-size: 12px;">[KPa]</div>
+
+            <!--Point4の表示-->
+            <span style="position: absolute; top: 340px; left: 1120px; font-size: 14px;">Q:</span>
+            <div id="da014" style="position: absolute; top: 340px; left: 1150px; font-size: 12px;">N</div> <!-- Point4  体積流量 -->
+            <div id="un14" style="position: absolute; top: 340px; left: 1220px; font-size: 12px;">[m^3/h]</div>
+            <span style="position: absolute; top: 370px; left: 1120px; font-size: 14px;">T:</span>
+            <div id="da6" style="position: absolute; top: 370px; left: 1150px; font-size: 12px;">O</div> <!-- Point4 温度 -->
+            <div id="un15" style="position: absolute; top: 370px; left: 1220px; font-size: 12px;">[deg]</div>
+            <span style="position: absolute; top: 400px; left: 1120px; font-size: 14px;">P:</span>
+            <div id="da17" style="position: absolute; top: 400px; left: 1150px; font-size: 12px;">P</div> <!-- Point4 圧力-->
+            <div id="un16" style="position: absolute; top: 400px; left: 1220px; font-size: 12px;">[KPa]</div>
+
+            <!--Point5の表示-->
+            <span style="position: absolute; top: 620px; left: 1070px; font-size: 14px;">Q:</span>
+            <div id="da45" style="position: absolute; top: 620px; left: 1100px; font-size: 12px;">Q</div><!-- Point5 体積流量 -->
+            <div id="un17" style="position: absolute; top: 620px; left: 1170px; font-size: 12px;">[m^3/h]</div>
+            <span style="position: absolute; top: 650px; left: 1070px; font-size: 14px;">T:</span>
+            <div id="da7" style="position: absolute; top: 650px; left: 1100px; font-size: 12px;">R</div><!-- Point5 温度 -->
+            <div id="un18" style="position: absolute; top: 650px; left: 1170px; font-size: 12px;">[deg]</div>
+            <span style="position: absolute; top: 680px; left: 1070px; font-size: 14px;">P:</span>
+            <div id="da019" style="position: absolute; top: 680px; left: 1100px; font-size: 12px;">S</div><!--Point5  圧力 -->
+            <div id="un19" style="position: absolute; top: 680px; left: 1170px; font-size: 12px;">[KPa]</div>
+
+            <!--Point6の表示-->
+            <span style="position: absolute; top: 290px; left: 840px; font-size: 14px;">Q:</span>
+            <div id="da020" style="position: absolute; top: 290px; left: 870px; font-size: 12px;">T</div><!-- Point6 体積流量 -->
+            <div id="un20" style="position: absolute; top: 290px; left: 940px; font-size: 12px;">[m^3/h]</div>
+            <span style="position: absolute; top: 320px; left: 840px; font-size: 14px;">T:</span>
+            <div id="da8" style="position: absolute; top: 320px; left: 870px; font-size: 12px;">U</div><!-- Point6 温度 -->
+            <div id="un21" style="position: absolute; top: 320px; left: 940px; font-size: 12px;">[deg]</div>
+            <span style="position: absolute; top: 350px; left: 840px; font-size: 14px;">P:</span>
+            <div id="da022" style="position: absolute; top: 350px; left: 870px; font-size: 12px;">V</div><!-- Point6 圧力 -->
+            <div id="un22" style="position: absolute; top: 350px; left: 940px; font-size: 12px;">[KPa]</div>
+
+            <!--Point7の表示-->
+            <span style="position: absolute; top: 200px; left: 610px; font-size: 14px;">Q:</span>
+            <div id="da41" style="position: absolute; top: 200px; left: 640px; font-size: 12px;">W</div><!-- Point7 体積流量-->
+            <div id="un23" style="position: absolute; top: 200px; left: 710px; font-size: 12px;">[m^3/h]</div>
+            <span style="position: absolute; top: 230px; left: 610px; font-size: 14px;">T:</span>
+            <div id="da9" style="position: absolute; top: 230px; left: 640px; font-size: 12px;">X</div><!-- Point7 温度-->
+            <div id="un24" style="position: absolute; top: 230px; left: 710px; font-size: 12px;">[deg]</div>
+            <span style="position: absolute; top: 260px; left: 610px; font-size: 14px;">P:</span>
+            <div id="da025" style="position: absolute; top: 260px; left: 640px; font-size: 12px;">Y</div><!-- Point7 圧力-->
+            <div id="un25" style="position: absolute; top: 260px; left: 710px; font-size: 12px;">[KPa]</div>
+
+            <!--Point8の表示-->
+            <span style="position: absolute; top: 610px; left:860px; font-size: 14px;">Q:</span>
+            <div id="da026" style="position: absolute; top: 610px; left: 890px; font-size: 12px;">Z</div><!-- Point8 体積流量-->
+            <div id="un26" style="position: absolute; top: 610px; left: 960px; font-size: 12px;">[m^3/h]</div>
+            <span style="position: absolute; top: 640px; left: 860px; font-size: 14px;">T:</span>
+            <div id="da10" style="position: absolute; top: 640px; left: 890px; font-size: 12px;">AA</div><!-- Point8 温度 -->
+            <div id="un27" style="position: absolute; top: 640px; left: 960px; font-size: 12px;">[deg]</div>
+            <span style="position: absolute; top: 670px; left: 860px; font-size: 14px;">P:</span>
+            <div id="da028" style="position: absolute; top: 670px; left: 890px; font-size: 12px;">AB</div><!-- Point8  圧力-->
+            <div id="un28" style="position: absolute; top: 670px; left: 960px; font-size: 12px;">[KPa]</div>
+
+            <!--Point9の表示-->
+            <span style="position: absolute; top: 400px; left: 850px; font-size: 14px;">Q:</span>
+            <div id="da42" style="position: absolute; top: 400px; left: 880px; font-size: 12px;">AC</div><!-- Point9  体積流量-->
+            <div id="un29" style="position: absolute; top: 400px; left: 950px; font-size: 12px;">[m^3/h]</div>
+            <span style="position: absolute; top: 430px; left: 850px; font-size: 14px;">T:</span>
+            <div id="da11" style="position: absolute; top: 430px; left: 880px; font-size: 12px;">AD</div><!-- Point9 温度 -->
+            <div id="un30" style="position: absolute; top: 430px; left: 950px; font-size: 12px;">[deg]</div>
+            <span style="position: absolute; top: 460px; left: 850px; font-size: 14px;">P:</span>
+            <div id="da031" style="position: absolute; top: 460px; left: 880px; font-size: 12px;">AE</div><!-- Point9 圧力 -->
+            <div id="un31" style="position: absolute; top: 460px; left: 950px; font-size: 12px;">[KPa]</div>
+
+            <!-- フラッシュ室水位 -->
+            <span style="position: absolute; top: 420px; left: 440px; font-size: 14px;">FL:</span>
+            <div id="da31" style="position: absolute; top: 420px; left: 470px; font-size: 12px;">AF</div>
+            <div id="un32" style="position: absolute; top: 420px; left: 540px; font-size: 12px;">[mm]</div>
+
+            <!-- 補助凝縮器水位 -->
+            <span style="position: absolute; top: 550px; left: 1170px; font-size: 14px;">ACL:</span>
+            <div id="da32" style="position: absolute; top: 550px; left: 1220px; font-size: 12px;">AG</div>
+            <div id="un33" style="position: absolute; top: 550px; left: 1280px; font-size: 12px;">[mm]</div>
+
+            <!--生産効率-->
+            <span style="position:absolute;top:600px;left:0px;font-size:14px;">Flash Water Production Effciency:</span>
+            <div id="da46" style="position:absolute;top:600px;left:250px;font-size:12px;">AH</div><!--生産効率-->
+            <div id="un33" style="position: absolute; top: 600px; left:300px; font-size: 12px;">[%]</div>
+        </div>
+
+        <!--graph main unit-->
+        <div id="tablink">
+            <div class="tab">
+                <p>
+                    <input type="button" value="Input" onClick="InputData()">
+                    <input type="button" value="Start" onclick="mt()">
+                    <input type="button" value="Stop" onclick="sstop()">
+
+                    <!-- Display Time -->
+                    <span >Time:</span>
+                    <span id="dispT">0</span>
+                    <span>[s]</span>
+                </p>
+            </div>
+            <div class="tab tabs" id="bta" onclick="doToggle(0)"><p>Temperature</p></div>
+            <div class="tab tabs" id="btb" onclick="doToggle(1)"><p>Pressure</p></div>
+            <div class="tab tabs" id="btc" onclick="doToggle(2)"><p>Flow Rate</p></div>
+        </div>
+        
+        <div id="graphinfo" style="margin-top: 5px; margin-left: 20px;">
+            <div class="row">
+                <div class="column" style="width: 150px;">
+                    <!-- Vertical Axis Start Value and Step Value -->
+                    <div>Vertical axis</div>
+                    <div>Start:<input id="gstart" name="GStart" type="text" value="0" size="3"></div>
+                    <div>Step:<input id="gstep" name="GStep" type="text" value="0" size="3"></div>
+                </div>
+                <div class="column">
+                    <!-- Graph Title -->
+                    <div><input type="text" id="GTitle" size="32" style="font-size: 20px;" value="Graph Title"> </div>
+                    
+                    <!--Temperature Graph-->
+                    <div id="TempGraphButtons">
+                        <input type="button" id="Aid1" value="AWSWIT" onclick="graphT(1);graph(1)">
+                        <input type="button" id="Aid2" value="CSWIT" onclick="graphT(2);graph(2)">
+                        <input type="button" id="Aid3" value="WSWOT" onclick="graphT(3);graph(3)">
+                        <input type="button" id="Aid4" value="CSWOT" onclick="graphT(4);graph(4)">
+                        <input type="button" id="Aid5" value="ET   " onclick="graphT(5);graph(5)">
+                        <input type="button" id="Aid6" value="CT   " onclick="graphT(6);graph(6)">
+                        <input type="button" id="Aid7" value="P1P  " onclick="graphT(7);graph(7)">
+                        <input type="button" id="Aid8" value="P2P  " onclick="graphT(8);graph(8)">
+                        <input type="button" id="Aid9" value="P3P  " onclick="graphT(9);graph(9)">
+                        <input type="button" id="Aid10" value="P4P  " onclick="graphT(10);graph(10)">
+                        <input type="button" id="Aid11" value="P1T  " onclick="graphT(11);graph(11)">
+                        <input type="button" id="Aid12" value="P2T  " onclick="graphT(12);graph(12)">
+                        <input type="button" id="Aid13" value="P3T  " onclick="graphT(13);graph(13)">
+                        <input type="button" id="Aid14" value="P4T  " onclick="graphT(14);graph(14)">
+                        <input type="button" id="Aid15" value="TBA  " onclick="graphT(15);graph(15)">
+                    </div>
+
+                    <!--Pressure Graph-->
+                    <div id="PressureGraphButtons" style="display: none;">
+                        <input type="button" id="Bid1" value="BWSWIT" onclick="graphT(1);graph(1)">
+                        <input type="button" id="Bid2" value="CSWIT" onclick="graphT(2);graph(2)">
+                        <input type="button" id="Bid3" value="WSWOT" onclick="graphT(3);graph(3)">
+                        <input type="button" id="Bid4" value="CSWOT" onclick="graphT(4);graph(4)">
+                        <input type="button" id="Bid5" value="ET   " onclick="graphT(5);graph(5)">
+                        <input type="button" id="Bid6" value="CT   " onclick="graphT(6);graph(6)">
+                        <input type="button" id="Bid7" value="P1P  " onclick="graphT(7);graph(7)">
+                        <input type="button" id="Bid8" value="P2P  " onclick="graphT(8);graph(8)">
+                        <input type="button" id="Bid9" value="P3P  " onclick="graphT(9);graph(9)">
+                    </div>
+
+                    <!--Flow Rate Graph-->
+                    <div id="FlowGraphButtons" style="display: none;">
+                        <input type="button" id="Cid1" value="CWSWIT" onclick="graphT(1);graph(1)">
+                        <input type="button" id="Cid2" value="CSWIT" onclick="graphT(2);graph(2)">
+                        <input type="button" id="Cid3" value="WSWOT" onclick="graphT(3);graph(3)">
+                        <input type="button" id="Cid4" value="CSWOT" onclick="graphT(4);graph(4)">
+                        <input type="button" id="Cid5" value="ET   " onclick="graphT(5);graph(5)">
+                        <input type="button" id="Cid6" value="CT   " onclick="graphT(6);graph(6)">
+                    </div>
+                </div>
+            </div>
+
+            <canvas id="Gline" style="background-color: #dddddd; height: 370px; width: 1250px;"></canvas>
+            <!-- Display Unit for Horizontal Axis -->
+            <div style="position: absolute; top: 1155px; left: 1280px; font-size: 12px; font-family: sans-serif;">[s]</div>
+        </div>
+        
+        <!-- These are of 2ranking and not displayed in browser -->
+        <div style="display: none;">
+            <!-- Initial Variables for Input Data -->
+            <div  style="position: absolute; top: 110px; left: 10px; font-size: 12px;">Twsi1=</div>
+            <input id="tw" type="text" style="position: absolute; top: 110px; left: 55px; font-size: 12px;" value="29.0" size="8">
+            <div  style="position: absolute; top: 110px; left: 140px; font-size: 12px;">[deg]</div>
+            <div  style="position: absolute; top: 150px; left: 10px; font-size: 12px;">Tcsi2=</div>
+            <input id="tc" type="text" style="position: absolute; top: 150px; left: 55px; font-size: 12px;" value="9.0" size="8">
+            <div  style="position: absolute; top: 150px; left: 140px; font-size: 12px;">[deg]</div>
+            <div  style="position: absolute; top: 190px; left: 10px; font-size: 12px;">Mws=</div>
+            <input id="mw" type="text" style="position: absolute; top: 190px; left: 55px; font-size: 12px;" value="39.72" size="8">
+            <div  style="position: absolute; top: 190px; left: 140px; font-size: 12px;">[kg/s]</div>
+            <div  style="position: absolute; top: 230px; left: 10px; font-size: 12px;">Mcs=</div>
+            <input id="mc" type="text" style="position: absolute; top: 230px; left: 55px; font-size: 12px;" value="38.89" size="8">
+            <div  style="position: absolute; top: 230px; left: 140px; font-size: 12px;">[kg/s]</div> 
+            <div  style="position: absolute; top: 270px; left: 10px; font-size: 12px;">Mwf1=</div>
+            <input id="mwf1" type="text" style="position: absolute; top: 270px; left: 55px; font-size: 12px;" value="0.35" size="8">
+            <div  style="position: absolute; top: 270px; left: 140px; font-size: 12px;">[kg/s]</div> 
+            <div  style="position: absolute; top: 310px; left: 10px; font-size: 12px;">Mwf2=</div>
+            <input id="mwf2" type="text" style="position: absolute; top: 310px; left: 55px; font-size: 12px;" value="0.35" size="8">
+            <div  style="position: absolute; top: 310px; left: 140px; font-size: 12px;">[kg/s]</div>
+       
+            <!-- State Variables in Cycle Diagram -->
+            <div id="data1" style="position: absolute; top: 145px; left: 370px; font-size: 14px;">00.00</div>
+            <span id="unit1" style="position: absolute; top: 145px; left: 405px; font-size: 14px;">[deg]</span> <!-- 温海水入口温度 -->
+            <div id="data2" style="position: absolute; top: 305px; left: 787px; font-size: 14px;">00.00</div>
+            <span id="unit2" style="position: absolute; top: 305px; left: 822px; font-size: 14px;">[deg]</span> <!-- 冷海水入口温度 -->
+            <div id="data3" style="position: absolute; top: 205px; left: 370px; font-size: 14px;">00.00</div>
+            <span id="unit3" style="position: absolute; top: 205px; left: 405px; font-size: 14px;">[deg]</span> <!-- 温海水出口温度 -->
+            <div id="data4" style="position: absolute; top: 245px; left: 787px; font-size: 14px;">00.00</div>
+            <span id="unit4" style="position: absolute; top: 245px; left: 822px; font-size: 14px;">[deg]</span> <!-- 冷海水出口温度 -->
+            <div id="data5" style="position: absolute; top: 195px; left: 480px; font-size: 14px;">00.00</div>
+            <span id="unit5" style="position: absolute; top: 195px; left: 515px; font-size: 14px;">[deg]</span> <!-- 蒸発温度 -->
+            <div id="data6" style="position: absolute; top: 293px; left: 630px; font-size: 14px;">00.00</div>
+            <span id="unit6" style="position: absolute; top: 293px; left: 665px; font-size: 14px;">[deg]</span> <!-- 凝縮温度 -->
+            <div id="data7" style="position: absolute; top: 105px; left: 445px; font-size: 14px;">00.00</div>
+            <span id="unit7" style="position: absolute; top: 105px; left: 480px; font-size: 14px;">[MPa]</span> <!-- Point 1 圧力 -->
+            <div id="data8" style="position: absolute; top: 170px; left: 665px; font-size: 14px;">00.00</div>
+            <span id="unit8" style="position: absolute; top: 170px; left: 700px; font-size: 14px;">[MPa]</span> <!-- Point 2 圧力 -->
+            <div id="data9" style="position: absolute; top: 425px; left: 695px; font-size: 14px;">00.00</div>
+            <span id="unit9" style="position: absolute; top: 425px; left: 730px; font-size: 14px;">[MPa]</span> <!-- Point 3 圧力 -->
+            <div id="data10" style="position: absolute; top: 355px; left: 445px; font-size: 14px;">00.00</div>
+            <span id="unit10" style="position: absolute; top: 355px; left: 480px; font-size: 14px;">[MPa]</span> <!-- Point 4 圧力 -->
+            <div id="data11" style="position: absolute; top: 125px; left: 445px; font-size: 14px;">00.00</div>
+            <span id="unit11" style="position: absolute; top: 125px; left: 480px; font-size: 14px;">[deg]</span> <!-- Point 1 温度 -->
+            <div id="data12" style="position: absolute; top: 190px; left: 665px; font-size: 14px;">00.00</div>
+            <span id="unit12" style="position: absolute; top: 190px; left: 700px; font-size: 14px;">[deg]</span> <!-- Point 2 温度 -->
+            <div id="data13" style="position: absolute; top: 445px; left: 695px; font-size: 14px;">00.00</div>
+            <span id="unit13" style="position: absolute; top: 445px; left: 730px; font-size: 14px;">[deg]</span> <!-- Point 3 温度 -->
+            <div id="data14" style="position: absolute; top: 375px; left: 445px; font-size: 14px;">00.00</div>
+            <span id="unit14" style="position: absolute; top: 375px; left: 480px; font-size: 14px;">[deg]</span> <!-- Point 4 温度 -->
+            <div id="data15" style="position: absolute; top: 095px; left: 787px; font-size: 14px;">00.00</div>
+            <span id="unit15" style="position: absolute; top: 095px; left: 822px; font-size: 14px;">[kW]</span> <!-- タービン出力 -->
+
+            <div id="data16" style="display:none; position: absolute; top: 145px; left: 370px; font-size: 14px;">00.00</div>
+            <span id="unit16" style="display:none; position: absolute; top: 145px; left: 405px; font-size: 14px;">[deg]</span> <!-- 温海水入口温度 -->
+            <div id="data17" style="display:none; position: absolute; top: 305px; left: 787px; font-size: 14px;">00.00</div>
+            <span id="unit17" style="display:none; position: absolute; top: 305px; left: 822px; font-size: 14px;">[deg]</span> <!-- 冷海水入口温度 -->
+            <div id="data18" style="display:none; position: absolute; top: 205px; left: 370px; font-size: 14px;">00.00</div>
+            <span id="unit18" style="display:none; position: absolute; top: 205px; left: 405px; font-size: 14px;">[deg]</span> <!-- 温海水出口温度 -->
+            <div id="data19" style="display:none; position: absolute; top: 245px; left: 787px; font-size: 14px;">00.00</div>
+            <span id="unit19" style="display:none; position: absolute; top: 245px; left: 822px; font-size: 14px;">[deg]</span> <!-- 冷海水出口温度 -->
+            <div id="data20" style="display:none; position: absolute; top: 195px; left: 480px; font-size: 14px;">00.00</div>
+            <span id="unit20" style="display:none; position: absolute; top: 195px; left: 515px; font-size: 14px;">[deg]</span> <!-- 蒸発温度 -->
+            <div id="data21" style="display:none; position: absolute; top: 293px; left: 630px; font-size: 14px;">00.00</div>
+            <span id="unit21" style="display:none; position: absolute; top: 293px; left: 665px; font-size: 14px;">[deg]</span> <!-- 凝縮温度 -->
+            <div id="data22" style="display:none; position: absolute; top: 105px; left: 445px; font-size: 14px;">00.00</div>
+            <span id="unit22" style="display:none; position: absolute; top: 105px; left: 480px; font-size: 14px;">[MPa]</span> <!-- Point 5 圧力 -->
+            <div id="data23" style="display:none; position: absolute; top: 170px; left: 665px; font-size: 14px;">00.00</div>
+            <span id="unit23" style="display:none; position: absolute; top: 170px; left: 700px; font-size: 14px;">[MPa]</span> <!-- Point 6 圧力 -->
+            <div id="data24" style="display:none; position: absolute; top: 425px; left: 695px; font-size: 14px;">00.00</div>
+            <span id="unit24" style="display:none; position: absolute; top: 425px; left: 730px; font-size: 14px;">[MPa]</span> <!-- Point 7 圧力 -->
+            <div id="data25" style="display:none; position: absolute; top: 355px; left: 445px; font-size: 14px;">00.00</div>
+            <span id="unit25" style="display:none; position: absolute; top: 355px; left: 480px; font-size: 14px;">[MPa]</span> <!-- Point 8 圧力 -->
+            <div id="data26" style="display:none; position: absolute; top: 125px; left: 445px; font-size: 14px;">00.00</div>
+            <span id="unit26" style="display:none; position: absolute; top: 125px; left: 480px; font-size: 14px;">[deg]</span> <!-- Point 5 温度 -->
+            <div id="data27" style="display:none; position: absolute; top: 190px; left: 665px; font-size: 14px;">00.00</div>
+            <span id="unit27" style="display:none; position: absolute; top: 190px; left: 700px; font-size: 14px;">[deg]</span> <!-- Point 6 温度 -->
+            <div id="data28" style="display:none; position: absolute; top: 445px; left: 695px; font-size: 14px;">00.00</div>
+            <span id="unit28" style="display:none; position: absolute; top: 445px; left: 730px; font-size: 14px;">[deg]</span> <!-- Point 7 温度 -->
+            <div id="data29" style="display:none; position: absolute; top: 375px; left: 445px; font-size: 14px;">00.00</div>
+            <span id="unit29" style="display:none; position: absolute; top: 375px; left: 480px; font-size: 14px;">[deg]</span> <!-- Point 8 温度 -->
+            <div id="data30" style="display:none; position: absolute; top: 095px; left: 787px; font-size: 14px;">00.00</div>
+            <span id="unit30" style="display:none; position: absolute; top: 095px; left: 822px; font-size: 14px;">[kW]</span> <!-- タービン出力 -->
+
+
+            <!-- State Variables and Evaluation Indexes Tables -->
+
+            <table border="2" id="tab1" style="position: absolute; top: 60px; left: 1000px; font-size: 14px;">
+            <caption>State Variables and Evaluation Indexes (Unit A)</caption>
+            <tr><td id="tn1">Warm Sea Water Inlet T [deg]</td><td
+            id="ta1">00.00</td><td> </td><td id="tn15">E: Log Mean T Difference[K]</td><td id="ta15">00.00</td></tr>
+            <tr><td id="tn2">Cold Sea Water Inlet T [deg]</td><td id="ta2">00.00</td><td> </td><td id="tn16">C: Log Mean T Difference[K]</td><td id="ta16">00.00</td></tr>
+            <tr><td id="tn3">Warm Sea Water Outlet T [deg]</td><td id="ta3">00.00</td><td> </td><td id="tn17">W: T Difference between I/O [deg]</td><td id="ta17">00.00</td></tr>
+            <tr><td id="tn4">Cold Sea Water Outlet T [deg]</td><td id="ta4">00.00</td><td> </td><td id="tn18">C: T Difference between I/O [deg]</td><td id="ta18">00.00</td></tr>
+            <tr><td id="tn5">Evaporation Temperature [deg]</td><td id="ta5">00.00</td><td> </td><td id="tn19">Turbine Output [kW]</td><td id="ta19">00.00</td></tr>
+            <tr><td id="tn6">Condensation Temperature [deg]</td><td id="ta6">00.00</td><td> </td><td id="tn20">Pump Output [kW]</td><td id="ta20">00.00</td></tr>
+            <tr><td id="tn7">Point 1 P [MPa]</td><td id="ta7">00.00</td><td> </td><td id="tn21">Power Output [kW]</td><td id="ta21">00.00</td></tr>
+            <tr><td id="tn8">Point 2 P [MPa]</td><td id="ta8">00.00</td><td> </td><td id="tn22">Efficiency [%]</td><td id="ta22">00.00</td></tr>
+            <tr><td id="tn9">Point 3 P [MPa]</td><td id="ta9">00.00</td><td> </td><td id="tn23">E: Heat Flow Rate [kW]</td><td id="ta23">000.00</td></tr>
+            <tr><td id="tn10">Point 4 P [MPa]</td><td id="ta10">00.00</td><td> </td><td id="tn24">C: Heat Flow Rate [kW]</td><td id="ta24">000.00</td></tr>
+            <tr><td id="tn11">Point 1 T [deg]</td><td id="ta11">00.00</td><td> </td><td id="tn25">Maximum Power Efficiency [%]</td><td id="ta25">00.00</td></tr>
+            <tr><td id="tn12">Point 2 T [deg]</td><td id="ta12">00.00</td><td> </td><td id="tn26"></td><td id="ta26"></td></tr>
+            <tr><td id="tn13">Point 3 T [deg]</td><td id="ta13">00.00</td><td> </td><td id="tn27"></td><td id="ta27"></td></tr>
+            <tr><td id="tn14">Point 4 T [deg]</td><td id="ta14">00.00</td><td> </td><td id="tn28"></td><td id="ta28"></td></tr>
+            </table>
+
+            <table border="2" id="tab2" style="display:none; position: absolute; top: 60px; left: 1000px; font-size: 14px;">
+            <caption>State Variables and Evaluation Indexes (Unit B)</caption>
+            <tr><td id="tn29">Warm Sea Water Inlet T [deg]</td><td id="ta29">00.00</td><td> </td><td id="tn43">E: Log Mean T Difference[K]</td><td id="ta43">00.00</td></tr>
+            <tr><td id="tn30">Cold Sea Water Inlet T [deg]</td><td id="ta30">00.00</td><td> </td><td id="tn44">C: Log Mean T Difference[K]</td><td id="ta44">00.00</td></tr>
+            <tr><td id="tn31">Warm Sea Water Outlet T [deg]</td><td id="ta31">00.00</td><td> </td><td id="tn45">W: T Difference between I/O [deg]</td><td id="ta45">00.00</td></tr>
+            <tr><td id="tn32">Cold Sea Water Outlet T [deg]</td><td id="ta32">00.00</td><td> </td><td id="tn46">C: T Difference between I/O [deg]</td><td id="ta46">00.00</td></tr>
+            <tr><td id="tn33">Evaporation Temperature [deg]</td><td id="ta33">00.00</td><td> </td><td id="tn47">Turbine Output [kW]</td><td id="ta47">00.00</td></tr>
+            <tr><td id="tn34">Condensation Temperature [deg]</td><td id="ta34">00.00</td><td> </td><td id="tn48">Pump Output [kW]</td><td id="ta48">00.00</td></tr>
+            <tr><td id="tn35">Point 5 P [MPa]</td><td id="ta35">00.00</td><td> </td><td id="tn49">Power Output [kW]</td><td id="ta49">00.00</td></tr>
+            <tr><td id="tn36">Point 6 P [MPa]</td><td id="ta36">00.00</td><td> </td><td id="tn50">Efficiency [%]</td><td id="ta50">00.00</td></tr>
+            <tr><td id="tn37">Point 7 P [MPa]</td><td id="ta37">00.00</td><td>  </td><td id="tn51">E: Heat Flow Rate [kW]</td><td id="ta51">000.00</td></tr>
+            <tr><td id="tn38">Point 8 P [MPa]</td><td id="ta38">00.00</td><td>  </td><td id="tn52">C: Heat Flow Rate [kW]</td><td id="ta52">000.00</td></tr>
+            <tr><td id="tn39">Point 5 T [deg]</td><td id="ta39">00.00</td><td> </td><td id="tn53">Maximum Power Efficiency [%]</td><td id="ta53">00.00</td></tr>
+            <tr><td id="tn40">Point 6 T [deg]</td><td id="ta40">00.00</td><td> </td><td id="tn54"></td><td id="ta54"></td></tr>
+            <tr><td id="tn41">Point 7 T [deg]</td><td id="ta41">00.00</td><td> </td><td id="tn55"></td><td id="ta55"></td></tr>
+            <tr><td id="tn42">Point 8 T [deg]</td><td id="ta42">00.00</td><td> </td><td id="tn56"></td><td id="ta56"></td></tr>
+            </table>
+        </div> 
+    </form>
+</body>
+
+</html>
