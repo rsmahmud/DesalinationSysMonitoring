@@ -14,7 +14,7 @@
     <form name="js">
         <h1 style="position: absolute; top: 5px; left:20px;">Monitoring</h1>
 
-        <div id="cntainer" style="background-color: #e1eeee; width: auto; height: 700px;">
+        <div id="container" style="">
             <img src="Desalination-system2.svg" id="area1" width="1300" height="600" style="position:absolute;top:100px; left:0px;" align="left">
 
             <div id="unit" style="position: absolute; top:320px; left: 440px; font-size: 20px;">Sprayflash</div>
@@ -170,9 +170,9 @@
             <div class="tab tabs" id="btc" onclick="doToggle(2)"><p>Flow Rate</p></div>
         </div>
         
-        <div id="graphinfo" style="margin-top: 5px; margin-left: 20px;">
+        <div id="graphinfo">
             <div class="row">
-                <div class="column" style="width: 150px;">
+                <div class="column">
                     <!-- Vertical Axis Start Value and Step Value -->
                     <div>Vertical axis</div>
                     <div>Start:<input id="gstart" name="GStart" type="text" value="0" size="3"></div>
@@ -180,7 +180,7 @@
                 </div>
                 <div class="column">
                     <!-- Graph Title -->
-                    <div><input type="text" id="GTitle" size="32" style="font-size: 20px;" value="Graph Title"> </div>
+                    <div><input type="text" id="GTitle" size="32" value="Graph Title"> </div>
                     
                     <!--Temperature Graph-->
                     <div id="TempGraphButtons">
@@ -226,7 +226,7 @@
                 </div>
             </div>
 
-            <canvas id="Gline" style="background-color: #dddddd; height: 370px; width: 1250px;"></canvas>
+            <canvas id="Gline"></canvas>
             <!-- Display Unit for Horizontal Axis -->
             <div style="position: absolute; top: 1155px; left: 1280px; font-size: 12px; font-family: sans-serif;">[s]</div>
         </div>

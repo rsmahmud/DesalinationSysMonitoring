@@ -5,6 +5,11 @@ body{
     font-size: 10pt; 
     font-family: "Trebuchet MS", sans-serif;
 }
+#container{
+    background-color: #e1eeee;
+    width: auto;
+    height: 700px;
+}
 #tablink{
     width: auto;
     height: 50px;
@@ -32,9 +37,12 @@ body{
     display: table;
     clear: both;
 }
-
+#GTitle{
+    font-size: 20px;
+}
 .column {
     float: left;
+    min-width: 150px;
 }
 
 /* Clear floats after the columns */
@@ -45,4 +53,11 @@ body{
 }
 #graphinfo{
     font-size: 12px;
+    margin-top: 5px;
+    margin-left: 20px;
+}
+#Gline{
+    background-color: #e1eeee;
+    width: 1250px;
+    height: 370px;
 }
